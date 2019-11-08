@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-
-import './post-list.css';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import './post-list.scss';
 
 import PostListItem from '../post-list-item'
 
@@ -15,21 +15,21 @@ export default class PostList extends Component {
     }
 
     render() {
-        const {posts} = this.props;
+        const {posts,onDelete} = this.props;
         const elements = posts.filter(el => {
             return this.isObject(el)
         }).map((item) => {
             const {id, ...itemProps} = item;
             return (
                 <li key={id} className="list-group-item">
-                    <PostListItem {...itemProps}/>
+                    <PostListItem {...itemProps} onDelete={()=> onDelete(id)}/>
                 </li>
             )
         });
         return (
-            <ul className="app-list list-group">
+            <ListGroup className="app-list">
                 {elements}
-            </ul>
+            </ListGroup>
         )
     }
 }
