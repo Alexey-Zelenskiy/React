@@ -6,14 +6,10 @@ export default class PostListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            important: false,
-            like: false,
             modal: false,
             deleted: false,
             value: ''
         };
-        this.onImportant = this.onImportant.bind(this);
-        this.onLike = this.onLike.bind(this);
         this.onOpenModal = this.onOpenModal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,17 +29,6 @@ export default class PostListItem extends Component {
         );
     }
 
-    onImportant() {
-        this.setState(({important}) => ({
-            important: !important
-        }))
-    }
-
-    onLike() {
-        this.setState(({like}) => ({
-            like: !like
-        }))
-    }
 
     onOpenModal() {
         this.setState(({open}) => ({
@@ -59,8 +44,7 @@ export default class PostListItem extends Component {
     }
 
     render() {
-        const {label, onDelete} = this.props;
-        const {important, like,} = this.state;
+        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
         const {open, deleted} = this.state;
         const {value} = this.state;
         let classNames = 'app-list-item d-flex justify-content-between';
@@ -73,7 +57,7 @@ export default class PostListItem extends Component {
         }
         const modal = () => {
             return (
-                <form onSubmit={this.handleSubmit} className="isModal">
+                <form onSubmit={this.handleSubmit} className="isModal d-flex">
                     <input
                         type="text"
                         placeholder="Введите текст"
@@ -103,24 +87,22 @@ export default class PostListItem extends Component {
         return (
             <div className={classNames}>
                 <div>
-                    <span className="app-list-item-label" onClick={this.onLike}>
+                    <span className="app-list-item-label" onClick={onToggleLiked}>
                         {value ? value : label}
                     </span>
-                    {/*<div className="post-list-item d-flex">{new Date().toLocaleTimeString()}</div>*/}
                 </div>
                 {open && modal()}
                 <div className={classNames_}>
                     <button type='button' className='btn btn-pen' onClick={this.onOpenModal}>
                         <i className="fa fa-pencil"/>
                     </button>
-                    <button type="button" className="btn-star btn-sm" onClick={this.onImportant}>
+                    <button type="button" className="btn-star btn-sm" onClick={onToggleImportant}>
                         <i className="fa fa-star"/>
                     </button>
                     <button type="button" className="btn-trash btn-sm" onClick={this.ofDeleted}>
                         <i className="fa fa-trash-o"/>
                     </button>
                     {deleted && formDeleted()}
-                    {console.log(this.state.deleted)}
                     <i className="fa fa-heart"/>
                 </div>
             </div>

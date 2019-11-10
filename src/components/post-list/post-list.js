@@ -15,14 +15,19 @@ export default class PostList extends Component {
     }
 
     render() {
-        const {posts,onDelete} = this.props;
+        const {posts,onDelete,onToggleImportant,onToggleLiked} = this.props;
         const elements = posts.filter(el => {
             return this.isObject(el)
         }).map((item) => {
             const {id, ...itemProps} = item;
             return (
                 <li key={id} className="list-group-item">
-                    <PostListItem {...itemProps} onDelete={()=> onDelete(id)}/>
+                    <PostListItem
+                        {...itemProps}
+                        onDelete={()=> onDelete(id)}
+                        onToggleImportant={()=>onToggleImportant(id)}
+                        onToggleLiked={()=>onToggleLiked(id)}
+                    />
                 </li>
             )
         });
