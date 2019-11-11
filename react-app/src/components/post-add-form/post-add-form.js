@@ -15,46 +15,42 @@ const PostAddBlock = styled.form`
 `;
 
 export default class PostAddForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: ''
-        };
-        this.onValueChange = this.onValueChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
 
-    onValueChange(e) {
+    state = {
+        text: ''
+    };
+
+    onValueChange = (e) => {
         this.setState({
             text: e.target.value
         })
-    }
+    };
 
-    onSubmit(e){
+    onSubmit = (e) => {
         e.preventDefault();
         this.props.onAdd(this.state.text);
         this.setState({
-           text:''
+            text: ''
         })
-    }
+    };
+
     render() {
         return (
-            <form
-                className="bottom-panel d-flex"
-                onSubmit={this.onSubmit}
-            >
-                <input
-                    type="text"
-                    placeholder="О чем вы думаете сейчас?"
-                    className="form-control new-post-label"
-                    onChange={this.onValueChange}
-                    value={this.state.text}
-                />
-                <Button type="submit" outline color="secondary">
-                    Добавить
-                </Button>
-            </form>
+          <form
+            className="bottom-panel d-flex"
+            onSubmit={this.onSubmit}
+          >
+              <input
+                type="text"
+                placeholder="О чем вы думаете сейчас?"
+                className="form-control new-post-label"
+                onChange={this.onValueChange}
+                value={this.state.text}
+              />
+              <Button type="submit" outline color="secondary">
+                  Добавить
+              </Button>
+          </form>
         )
     }
-}
-;
+};
