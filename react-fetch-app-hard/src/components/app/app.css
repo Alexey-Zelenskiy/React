@@ -1,0 +1,11 @@
+.app{
+    text-align: center;
+    text-align: -moz-center;
+}
+.app li{
+    list-style: none;
+}
+
+.app div{
+    border: 1px solid;
+}
