@@ -21,7 +21,7 @@ export default class PostList extends Component {
                   <PostListItem
                     {...itemProps}
                     onDelete={() => onDelete(id)}
-                    onToggleUpdate={() => onToggleUpdate(id, true)}
+                    onToggleUpdate={() => onToggleUpdate(id,true)}
                   />
               </li>
             )

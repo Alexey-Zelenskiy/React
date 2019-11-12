@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import styled from "styled-components";
+
+import './itemList.css'
+
 export default class ItemList extends Component {
 
     render() {
         return (
-            <ListGroup className="list-group">
+            <ListGroup className="item-list list-group">
                 <ListGroupItem>
                     John Snow
                 </ListGroupItem>

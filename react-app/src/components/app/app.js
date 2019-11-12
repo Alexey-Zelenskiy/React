@@ -73,6 +73,8 @@ export default class App extends Component {
       const old = data[index];
       const newItem = isImportant ? {...old, important: !old.important} : {...old, like: !old.like};
 
+      console.log(isImportant);
+
       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
 
       return {
