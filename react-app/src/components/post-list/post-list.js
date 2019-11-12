@@ -15,13 +15,12 @@ export default class PostList extends Component {
     const elements = posts.filter(el => {
       return this.isObject(el)
     }).map((item) => {
-      const {id, ...itemProps} = item;
       return (
-        <li key={id} className="list-group-item">
+        <li key={item.id} className="list-group-item">
           <PostListItem
-            {...itemProps}
-            onDelete={() => onDelete(id)}
-            onToggleUpdate={() => onToggleUpdate(id, true)}
+            {...item}
+            onDelete={() => onDelete(item.id)}
+            onToggleUpdate={onToggleUpdate}
           />
         </li>
       )

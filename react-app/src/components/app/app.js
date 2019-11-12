@@ -66,14 +66,13 @@ export default class App extends Component {
     return `f${(~~(Math.random() * 1e8)).toString(16)}`
   };
 
-  onToggleUpdate = (id, isImportant = false) => {
+  onToggleUpdate = (id, isImportant) => {
     this.setState(({data}) => {
       const index = data.findIndex(elem => elem.id === id);
 
       const old = data[index];
       const newItem = isImportant ? {...old, important: !old.important} : {...old, like: !old.like};
 
-      console.log(isImportant);
 
       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
 

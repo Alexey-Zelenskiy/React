@@ -81,7 +81,7 @@ export default class PostListItem extends Component {
         return (
           <div className={classNames}>
               <div>
-                    <span className="app-list-item-label" onClick={() => {onToggleUpdate(id)}}>
+                    <span className="app-list-item-label" onClick={() => onToggleUpdate(id)}>
                         {value ? value : label}
                     </span>
               </div>
@@ -90,9 +90,7 @@ export default class PostListItem extends Component {
                   <button type='button' className='btn btn-pen' onClick={this.onOpenModal}>
                       <i className="fa fa-pencil"/>
                   </button>
-                  <button type="button" className="btn-star btn-sm" onClick={() => {
-                      onToggleUpdate(id, true)
-                  }}>
+                  <button type="button" className="btn-star btn-sm" onClick={() => {onToggleUpdate(id, true)}}>
                       <i className="fa fa-star"/>
                   </button>
                   <button type="button" className="btn-trash btn-sm" onClick={this.ofDeleted}>
