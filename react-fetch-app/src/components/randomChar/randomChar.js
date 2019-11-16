@@ -10,20 +10,25 @@ export default class RandomChar extends Component {
     gotService = new gotService();
     state = {
         char: {},
-        loading: true
+        loading: true,
+        error:false
     };
 
-    constructor(props) {
-        super(props);
-        this.updateChar()
+    componentDidMount() {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId)
     }
 
     onCharLoaded = (char) => {
         this.setState({
             char,
             loading: false,
-            error: false
-        })
+            error: false,
+        });
     };
 
     onError = (err) => {
@@ -33,12 +38,12 @@ export default class RandomChar extends Component {
         })
     };
 
-    updateChar() {
+    updateChar = () => {
         const id = Math.floor(Math.random() * 140 + 25);
         this.gotService.getCharacters(id)
           .then(this.onCharLoaded)
           .catch(this.onError)
-    }
+    };
 
 
     render() {

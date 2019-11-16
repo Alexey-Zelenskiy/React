@@ -2,51 +2,54 @@ import React, {Component} from 'react';
 import {Button, Col, Container, Row} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
-
+import ErrorMessage from "../errorMessage";
+import CharacterPage from "../characterPage";
 
 export default class App extends Component {
 
-    state = {
-        visible: true
-    };
+  state = {
+    visible: true,
+    error: false
+  };
 
-    onHideRandomChar = (visible) => {
-        this.setState({
-            visible: !visible
-        });
-    };
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error: true
+    })
+  }
 
-    render() {
+  onHideRandomChar = () => {
+    this.setState((state) => {
+      return {
+        visible: !state.visible
+      }
+    });
+  };
 
-        const {visible} = this.state;
+  render() {
 
-        return (
-          <>
-              <Container>
-                  <Header/>
-              </Container>
-              <Container>
-                  <Row>
-                      <Col lg={{size: 5, offset: 0}}>
-                          <Button className="d-flex"
-                                  onClick={() => {
-                                      this.onHideRandomChar(visible)
-                                  }}>{visible ? 'Скрыть' : 'Показать'}</Button>
-                          {visible && <RandomChar/>}
-                      </Col>
-                  </Row>
-                  <Row>
-                      <Col md='6'>
-                          <ItemList/>
-                      </Col>
-                      <Col md='6'>
-                          <CharDetails/>
-                      </Col>
-                  </Row>
-              </Container>
-          </>
-        );
+    const {visible} = this.state;
+
+    if (this.state.error) {
+      return <ErrorMessage/>
     }
+
+    return (
+      <>
+        <Container>
+          <Header/>
+        </Container>
+        <Container>
+          <Row>
+            <Col lg={{size: 5, offset: 0}}>
+              <Button className="d-flex"
+                      onClick={() => this.onHideRandomChar()}>{visible ? 'Hide random char' : 'Show random char'}</Button>
+              {visible && <RandomChar/>}
+            </Col>
+          </Row>
+          <CharacterPage/>
+        </Container>
+      </>
+    );
+  }
 };
