@@ -10,7 +10,7 @@ export default class CharDetails extends Component {
 
     state = {
         char: null,
-        loading: true,
+        loading: false,
         error: false
     };
 
@@ -37,7 +37,7 @@ export default class CharDetails extends Component {
         this.setState({
             char,
             loading: false,
-            error: false,
+            error: false
         });
     };
 
@@ -46,15 +46,22 @@ export default class CharDetails extends Component {
         if (!charId) {
             return;
         }
+
         this.gotService.getCharacters(charId)
           .then(this.onCharLoaded)
-          .catch(this.onError)
     }
 
     render() {
 
         if (!this.state.char) {
-            return <span className="select-error">Please select character</span>
+            return (
+              <>
+                  <span className="select-error d-block">Please select character</span>
+                  <div className="char-details rounded">
+                      <Spinner/>
+                  </div>
+              </>
+            )
         }
         if (this.state.error) {
             return <ErrorMessage/>

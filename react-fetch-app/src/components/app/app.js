@@ -4,6 +4,8 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from "../errorMessage";
 import CharacterPage from "../characterPage";
+import ItemList from "../itemList";
+import CharDetails from "../charDetails";
 
 export default class App extends Component {
 
@@ -28,9 +30,9 @@ export default class App extends Component {
 
   render() {
 
-    const {visible} = this.state;
+    const {visible, error} = this.state;
 
-    if (this.state.error) {
+    if (error) {
       return <ErrorMessage/>
     }
 
@@ -48,6 +50,22 @@ export default class App extends Component {
             </Col>
           </Row>
           <CharacterPage/>
+          {/*<Row>*/}
+          {/*  <Col md='6'>*/}
+          {/*    <ItemList onCharSelected={this.onCharSelected}/>*/}
+          {/*  </Col>*/}
+          {/*  <Col md='6'>*/}
+          {/*    <CharDetails charId={this.state.selectedChar}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row>*/}
+          {/*  <Col md='6'>*/}
+          {/*    <ItemList onCharSelected={this.onCharSelected}/>*/}
+          {/*  </Col>*/}
+          {/*  <Col md='6'>*/}
+          {/*    <CharDetails charId={this.state.selectedChar}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
         </Container>
       </>
     );

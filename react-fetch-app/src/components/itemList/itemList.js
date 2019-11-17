@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import './itemList.css'
-import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
 
 export default class ItemList extends Component {
 
-  gotService = new gotService();
 
   state = {
-    charList: null,
-    error: false
+    itemList: null,
+    error: false,
+    id: null
   };
 
   componentDidCatch(error, errorInfo) {
@@ -20,25 +19,23 @@ export default class ItemList extends Component {
     })
   }
 
-
   componentDidMount() {
-    this.gotService.getAllCharacters()
-      .then((charList) => {
+
+    const {getData} = this.props;
+
+    getData()
+      .then((itemList) => {
         this.setState({
-          charList
+          itemList
         })
       })
   }
 
-  uniqueId = () => {
-    return `f${(~~(Math.random() * 1e8)).toString(16)}`
-  };
 
   renderItems(arr) {
-    const id = this.uniqueId();
-    return arr.map((item, i) => {
+    return arr.map((item) => {
       return (
-        <ListGroupItem key={id} onClick={() => this.props.onCharSelected(41 + i)}>
+        <ListGroupItem key={item.id} onClick={() => this.props.onCharSelected(item.id)}>
           {item.name}
         </ListGroupItem>
       )
@@ -47,17 +44,17 @@ export default class ItemList extends Component {
 
   render() {
 
-    const {charList} = this.state;
-
-    if (!charList) {
-      return <Spinner/>
-    }
-
     if (this.state.error) {
       return <ErrorMessage/>
     }
 
-    const items = this.renderItems(charList);
+    const {itemList} = this.state;
+
+    if (!itemList) {
+      return <Spinner/>
+    }
+
+    const items = this.renderItems(itemList);
 
     return (
       <ListGroup className="item-list list-group">
