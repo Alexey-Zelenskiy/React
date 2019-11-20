@@ -6,26 +6,26 @@ import Spinner from "../spinner";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import ErrorMessage from "../errorMessage";
 
-export default class RandomChar extends Component {
+export default class RandomItem extends Component {
     gotService = new gotService();
     state = {
-        char: {},
+        item: {},
         loading: true,
         error:false
     };
 
     componentDidMount() {
-        this.updateChar();
-        this.timerId = setInterval(this.updateChar, 1500);
+        this.updateItem();
+        this.timerId = setInterval(this.updateItem, 1500);
     }
 
     componentWillUnmount() {
         clearInterval(this.timerId)
     }
 
-    onCharLoaded = (char) => {
+    onItemLoaded = (item) => {
         this.setState({
-            char,
+            item,
             loading: false,
             error: false,
         });
@@ -38,20 +38,20 @@ export default class RandomChar extends Component {
         })
     };
 
-    updateChar = () => {
+    updateItem = () => {
         const id = Math.floor(Math.random() * 140 + 25);
         this.gotService.getCharacters(id)
-          .then(this.onCharLoaded)
+          .then(this.onItemLoaded)
           .catch(this.onError)
     };
 
 
     render() {
-        const {char, loading, error} = this.state;
+        const {item, loading, error} = this.state;
 
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View char={char}/> : null;
+        const content = !(loading || error) ? <View item={item}/> : null;
 
         return (
           <div className="random-block rounded">
@@ -63,8 +63,8 @@ export default class RandomChar extends Component {
     }
 }
 
-const View = ({char}) => {
-    const {name, gender, born, died, culture} = char;
+const View = ({item}) => {
+    const {name, gender, born, died, culture} = item;
     return (
       <>
           <h4>Random Character: {name}</h4>
