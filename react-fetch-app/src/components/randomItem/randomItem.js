@@ -1,22 +1,32 @@
 import React, {Component} from 'react';
 
-import './randomChar.css'
+import './randomItem.css'
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import ErrorMessage from "../errorMessage";
+import propTypes from 'prop-types'
 
 export default class RandomItem extends Component {
     gotService = new gotService();
     state = {
         item: {},
         loading: true,
-        error:false
+        error: false
     };
+
+    static defaultProps = {
+            interval: 15000
+    };
+
+    static propTypes ={
+      interval:propTypes.number
+    };
+
 
     componentDidMount() {
         this.updateItem();
-        this.timerId = setInterval(this.updateItem, 1500);
+        this.timerId = setInterval(this.updateItem, this.props.interval);
     }
 
     componentWillUnmount() {
@@ -62,6 +72,7 @@ export default class RandomItem extends Component {
         );
     }
 }
+
 
 const View = ({item}) => {
     const {name, gender, born, died, culture} = item;

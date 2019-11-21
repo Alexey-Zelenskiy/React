@@ -3,14 +3,17 @@ import {ListGroup, ListGroupItem} from 'reactstrap';
 import './itemList.css'
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
+import propTypes from 'prop-types'
 
-export default class ItemList extends Component {
+class ItemList extends Component {
 
 
-  state = {
-    itemList: null,
-    error: false,
-    id: null
+  static defaultProps = {
+    onItemSelected: () => {
+    }
+  };
+  static propTypes = {
+    onItemSelected: propTypes.func
   };
 
   componentDidCatch(error, errorInfo) {
@@ -18,19 +21,6 @@ export default class ItemList extends Component {
       error: true
     })
   }
-
-  componentDidMount() {
-
-      const {getData} = this.props;
-
-    getData()
-      .then((itemList) => {
-        this.setState({
-          itemList
-        })
-      })
-  }
-
 
   renderItems(arr) {
     return arr.map((item) => {
@@ -45,18 +35,8 @@ export default class ItemList extends Component {
   }
 
   render() {
-
-    if (this.state.error) {
-      return <ErrorMessage/>
-    }
-
-    const {itemList} = this.state;
-
-    if (!itemList) {
-      return <Spinner/>
-    }
-
-    const items = this.renderItems(itemList);
+    const {data} = this.props;
+    const items = this.renderItems(data);
 
     return (
       <ListGroup className="item-list list-group">
@@ -65,3 +45,40 @@ export default class ItemList extends Component {
     );
   }
 }
+
+const withData = (View) => {
+  return class extends Component {
+    state = {
+      data: null,
+      error: false,
+      id: null,
+      loading:true
+    };
+
+    componentDidMount() {
+      const {getData} = this.props;
+
+      getData()
+        .then((data) => {
+          this.setState({
+            data,
+            loading:false
+          })
+        })
+    }
+
+    render() {
+      if (this.state.error) {
+        return <ErrorMessage/>
+      }
+      const {data,loading} = this.state;
+      if (!data) {
+        return <Spinner/>
+      }
+      return (
+        loading?<Spinner/>:<View {...this.props} data={data}/>
+      )
+    }
+  };
+};
+export default withData(ItemList);
